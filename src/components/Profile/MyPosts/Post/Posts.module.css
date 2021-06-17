@@ -1,0 +1,11 @@
+/*.content {*/
+/*    grid-area: c;*/
+/*    background-color: lime;*/
+/*}*/
+/*.content img {*/
+/*    height: 400px;*/
+/*}*/
+.posts img {
+    height: 40px;
+    width: 40px;
+}

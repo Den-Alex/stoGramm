@@ -1,0 +1,24 @@
+/*.content {*/
+/*    grid-area: c;*/
+/*    background-color: lime;*/
+/*}*/
+/*.content img {*/
+/*    height: 400px;*/
+/*}*/
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    background-color: lime;
+}
+
+.dialogsItems {
+    padding: 10px;
+}
+
+.messages {
+    padding: 10px;
+}
+
+.messages .message {
+
+}
