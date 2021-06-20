@@ -1,18 +1,27 @@
 import React from 'react';
 import s from './Profile.module.css'
-import {MyPosts} from "./MyPosts/MyPosts";
+import {MyPosts, MyPostsType} from "./MyPosts/MyPosts";
+import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
+import {PostsType} from "./MyPosts/Post/Posts";
+import {ActionsType} from "../redux/state";
 
-
-export function Profile() {
+type ProfileType = {
+    posts: Array<PostsType>
+    newPostText: string
+    dispatch: (action: ActionsType ) => void
+    // addPost: (nexPostText: string) => void
+    // updateNewPostText: (newText: string) => void
+}
+export function Profile(props: ProfileType) {
     return (
         <div className={s.content}>
-            <div className={s.item}>
-                <img src="https://legko.com/disk/2/blogHQ/3c/3c108a4722d5526974d6b14bc7382543.jpg"/>
-            </div>
-            <div>
-                ava
-            </div>
-            <MyPosts/>
+            <ProfileInfo/>
+            <MyPosts posts={props.posts}
+                     newPostText={props.newPostText}
+                     dispatch={props.dispatch}
+                     // addPost={props.addPost}
+                     // updateNewPostText={props.updateNewPostText}
+            />
         </div>
     )
 }
