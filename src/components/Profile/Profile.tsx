@@ -9,8 +9,6 @@ type ProfileType = {
     posts: Array<PostsType>
     newPostText: string
     dispatch: (action: ActionsType ) => void
-    // addPost: (nexPostText: string) => void
-    // updateNewPostText: (newText: string) => void
 }
 export function Profile(props: ProfileType) {
     return (

@@ -1,31 +1,24 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
-import {DialogItem, DialogsItemType} from "./DialogItem/DialogItem";
-import {Message, MessageType } from './Message/Message';
+import {DialogItem} from "./DialogItem/DialogItem";
+import {Message} from './Message/Message';
+import {sendMessageAC, StoreType, updateNewMessageBodytAC} from "../redux/state";
 
 export type DialogsType = {
-    dialogs: Array<DialogsItemType>
-    messages: Array<MessageType>
+    store: StoreType
 }
 
 export const Dialogs = (props: DialogsType) => {
 
-    // let dialogs: Array<DialogsItemType> = [
-    //     { id: "1", name: "Denis" },
-    //     { id: "2", name: "Marina" },
-    //     { id: "3", name: "Elena" },
-    //     { id: "4", name: "Natascha" }
-    // ]
-    // let messages: Array<MessageType> = [
-    //     { id: "1", message: "Ibuhv ygh" },
-    //     { id: "2", message: "Prdvtr" },
-    //     { id: "3", message: "Srbl l" },
-    //     { id: "4", message: "M[ok ss" },
-    // ]
-
-    let dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = props.messages.map(m => <Message message={m.message} id={m.id}/>);
+    let dialogsElements = props.store.getState().dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
+    let messagesElements = props.store.getState().dialogsPage.messages.map(m => <Message message={m.message} id={m.id}/>);
+    let newMessageBody = props.store.getState().dialogsPage.newMessageBody
+    let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.store.dispatch(updateNewMessageBodytAC(e.currentTarget.value))
+    }
+    let sendMessageClick = () => {
+        props.store.dispatch(sendMessageAC())
+    }
 
     return (
         <div className={s.dialogs}>
@@ -33,7 +26,13 @@ export const Dialogs = (props: DialogsType) => {
                 {dialogsElements}
             </div>
             <div className={s.messages}>
-                {messagesElements}
+                <div>{messagesElements}</div>
+                <div><textarea onChange={onNewMessageChange}
+                               value={newMessageBody}
+                               placeholder='Den'></textarea></div>
+                <div>
+                    <button onClick={sendMessageClick}>Add</button>
+                </div>
             </div>
         </div>
     )
