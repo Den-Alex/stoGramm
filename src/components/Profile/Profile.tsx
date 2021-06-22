@@ -3,7 +3,8 @@ import s from './Profile.module.css'
 import {MyPosts, MyPostsType} from "./MyPosts/MyPosts";
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
 import {PostsType} from "./MyPosts/Post/Posts";
-import {ActionsType} from "../redux/state";
+import {ActionsType} from "../redux/store";
+import {MyPostsContainer} from "./MyPosts/MyPostContainer";
 
 type ProfileType = {
     posts: Array<PostsType>
@@ -14,9 +15,10 @@ export function Profile(props: ProfileType) {
     return (
         <div className={s.content}>
             <ProfileInfo/>
-            <MyPosts posts={props.posts}
-                     newPostText={props.newPostText}
-                     dispatch={props.dispatch}
+            <MyPostsContainer
+                // posts={props.posts}
+                //      newPostText={props.newPostText}
+                //      dispatch={props.dispatch}
                      // addPost={props.addPost}
                      // updateNewPostText={props.updateNewPostText}
             />
