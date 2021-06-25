@@ -1,18 +1,17 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
-import {Dialogs} from './components/Dialogs/Dialogs';
 import {Header} from "./components/Header/Header";
 import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from "./components/Profile/Profile";
 
-import {StoreType} from "./components/redux/store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {Users} from "./components/Users/Users";
 
-type AppType = {
-    store: StoreType
-}
-export const App = (props: AppType) => {
+// type AppType = {
+//     store: StoreType
+// }
+export const App = () => {
 
     return (
         <div className="app-wrapper">
@@ -28,6 +27,8 @@ export const App = (props: AppType) => {
                    render={() => <DialogsContainer
                        // store={props.store}
                    />}/>
+            <Route path='/users'
+                   render={() => <Users />}/>
         </div>
 
     );

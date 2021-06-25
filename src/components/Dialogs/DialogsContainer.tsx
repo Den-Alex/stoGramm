@@ -1,32 +1,31 @@
-import React, {ChangeEvent} from 'react';
-import s from './Dialogs.module.css'
-import {DialogItem} from "./DialogItem/DialogItem";
-import {Message} from './Message/Message';
-import {StoreType} from "../redux/store";
+import React from 'react';
+import {DialogsPageType, StateType} from "../redux/store";
 import {sendMessageAC, updateNewMessageBodytAC} from "../redux/dialogs-reducer";
 import {Dialogs} from "./Dialogs";
+import {connect} from 'react-redux';
 
-export type DialogsContainerType = {
-    store: StoreType
+
+type MapStateToPropsType = {
+    dialogsPage: DialogsPageType
 }
-
-export const DialogsContainer = (props: DialogsContainerType) => {
-
-    // let dialogsElements = props.store.getState().dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    // let messagesElements = props.store.getState().dialogsPage.messages.map(m => <Message message={m.message} id={m.id}/>);
-    // let newMessageBody = props.store.getState().dialogsPage.newMessageBody
-
-
-    let onNewMessageChange = (body: string) => {
-        props.store.dispatch(updateNewMessageBodytAC(body))
-    }
-    let sendMessageClick = () => {
-        props.store.dispatch(sendMessageAC())
-    }
-
-    return (
-        <div>
-       <Dialogs dialogsPage={props.store.getState().dialogsPage} sendMessage={sendMessageClick} updateNewMessageBody={onNewMessageChange}/>
-        </div>
-    )
+type MapDispatchToPropsType = {
+    updateNewMessageBody: (body: string) => void
+    sendMessage: () => void
 }
+ type MapToPropsType = MapStateToPropsType & MapDispatchToPropsType
+let mapStateToProps = (state: StateType): MapStateToPropsType => {
+    return {
+        dialogsPage: state.dialogsPage
+    }
+}
+let mapDispatchToProps = (dispatch: any): MapDispatchToPropsType => {
+    return {
+        updateNewMessageBody: (body: string) => {////////Уточнить крейтеры - нужно ли менять местами
+            dispatch(updateNewMessageBodytAC(body))
+        },
+        sendMessage: () => {
+            dispatch(sendMessageAC())
+        }
+    }
+}
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);

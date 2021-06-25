@@ -11,7 +11,7 @@ type ProfileType = {
     newPostText: string
     dispatch: (action: ActionsType ) => void
 }
-export function Profile(props: ProfileType) {
+export function Profile() {
     return (
         <div className={s.content}>
             <ProfileInfo/>

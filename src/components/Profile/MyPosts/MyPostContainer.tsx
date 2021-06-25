@@ -1,45 +1,37 @@
-import React, {ChangeEvent} from 'react';
-import s from './MyPosts.module.css';
-import {Posts, PostsType} from "./Post/Posts";
-import {ActionsType, StoreType} from "../../redux/store";
+import React from 'react';
 import {addPostAC, updateNewPostTextAC} from "../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
-import {StoreContext} from "../../../StoreContext";
-import {store} from "../../redux/redux-store";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
+import {PostsType} from "./Post/Posts";
+import { Dispatch } from 'redux';
 
-export type MyPostsContainerType = {
-    // posts: Array<PostsType>
-    // newPostText: string
-    // dispatch: (action: ActionsType) => void
-    store: StoreType
-    children: React.ReactNode
+
+type MapStateToPropsType = {
+    posts: Array<PostsType>
+    newPostText: string
 }
+type MapDispatchToPropsType = {
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+}
+export type MapToPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-
-export const MyPostsContainer = (props: MyPostsContainerType) => {
-
-
-    return (
-        <StoreContext.Consumer value={props.store}> {
-            (store) => {
-                let addPost = () => {
-                    // props.addPost(props.newPostText);////до урока 38
-                    // props.dispatch({type: 'ADD-POST'});//////урок 38
-                    props.store.dispatch(addPostAC());//////урок 39 Прокидываем экшен крейторы
-                }
-                let onChange = (newText: string) => {
-                    // props.updateNewPostText(e.currentTarget.value);////до урока 38
-                    // props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value});/////урок 38
-                    // props.dispatch(updateNewPostTextAC(e.currentTarget.value));/////урок 39
-                    props.store.dispatch(updateNewPostTextAC(newText));/////урок 43
-                }
-                return (
-                    <MyPosts posts={props.store.getState().profilePage.posts}
-                             updateNewPostText={onChange}
-                             addPost={addPost}
-                             newPostText={props.store.getState().profilePage.newPostText}/>)
-            }
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
+}
+// <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
+let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType=> {
+    return {
+        addPost: () => {////////Уточнить крейтеры - нужно ли менять местами
+            dispatch(addPostAC())
+        },
+        updateNewPostText: (newText: string) => {
+            dispatch(updateNewPostTextAC(newText))
         }
-        </StoreContext.Consumer>
-    )
+    }
 }
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
