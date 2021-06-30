@@ -5,13 +5,13 @@ type LocationType = {
     city: string
     country: string
 }
- export type UserType = {
+export type UserType = {
     id: number
     follwed: boolean
-    fullName: string
+    name: string
     status: string
     location: LocationType
-     photoUrl: string
+    photos: any///////////
 }
 export type InitialStateType = {
     users: Array<UserType>
@@ -29,7 +29,7 @@ let initialState: InitialStateType = {
     ]
 }
 
-export const usersReducer = (state:InitialStateType = initialState, action: any): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
 
 
     switch (action.type) {
@@ -54,10 +54,10 @@ export const usersReducer = (state:InitialStateType = initialState, action: any)
                 })
             }
         case SET_USERS: {
-               return {
-                   ...state,
+            return {
+                ...state,
                 users: [...state.users, ...action.users]
-               }
+            }
         }
         default:
             return state;
