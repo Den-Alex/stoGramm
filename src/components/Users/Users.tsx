@@ -1,31 +1,44 @@
-import React from "react";
 import s from "./Users.module.css";
 import userPhoto from "../../images/images.png";
-import axios from "axios";
+import React from "react";
 import {UserType} from "../redux/users-reducer";
 
 type UsersPropsType = {
     users: Array<UserType>
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    // setCurrentPage: (currentPage: number) => void
+    // setUsersTotalCount: (totalUsersCount: number) => void
+    // setUsers: (users: Array<UserType>) => void
 }
+export const Users = (props: UsersPropsType ) => {
 
-export class Users extends React.Component<UsersPropsType> {
-
-    componentDidMount() {
-
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-            this.props.setUsers(response.data.items);
-        });
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
     }
-
-    render() {
-
-        return (
-            <div className={s.users}>
+    return (
+        <div className={s.users}>
+            <div>
                 {
-                    this.props.users.map(u => <div key={u.id}>
+                    pages.map(p => {
+                        // @ts-ignore/////////////////////////////
+                        return <span className={props.currentPage === p && s.usersPage}
+                                     onClick={(e) => {
+                                         props.onPageChanged(p)
+                                     }
+                                     }
+                        >{p}</span>
+                    })
+                }
+            </div>
+            {
+                props.users.map(u => <div key={u.id}>
                     <span>
                         <div>
                             <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.photo}/>
@@ -33,15 +46,15 @@ export class Users extends React.Component<UsersPropsType> {
                         <div>
                             {u.follwed
                                 ? <button onClick={() => {
-                                    this.props.unfollow(u.id)
+                                    props.unfollow(u.id)
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    this.props.follow(u.id)
+                                    props.follow(u.id)
                                 }}>Follow</button>
                             }
                         </div>
                     </span>
-                        <span>
+                    <span>
                         <span>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
@@ -51,10 +64,8 @@ export class Users extends React.Component<UsersPropsType> {
                             <div>{"u.location.city"}</div>
                         </span>
                     </span>
-                    </div>)
-                }
-            </div>
-        )
-    }
+                </div>)
+            }
+        </div>
+    )
 }
-

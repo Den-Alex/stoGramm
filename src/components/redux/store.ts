@@ -1,6 +1,17 @@
 import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer";
 import {dialogsReducer, updateNewMessageBodytAC, sendMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
+import {
+    followAC,
+    FollowType,
+    setCurrentPageAC, setCurrentPagetype,
+    setUsersAC,
+    setUsersTotalCountAC,
+    setUsersType,
+    unfollowAC,
+    UnFollowType,
+    UsersTotalCount
+} from "./users-reducer";
 
 export type PostsType = {
     message: string
@@ -33,7 +44,11 @@ export type StateType = {
 export type ActionsType = AddPostActionType |
     UpdateNewPostTextActionType |
     UpdateNewMessageBodyActionType |
-    SendMessageActionType
+    SendMessageActionType | FollowType | UnFollowType | setUsersType | setCurrentPagetype | UsersTotalCount
+
+
+
+
 
 export type AddPostActionType = ReturnType<typeof addPostAC>
 export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
