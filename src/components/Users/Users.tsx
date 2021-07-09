@@ -27,12 +27,8 @@ export const Users = (props: UsersPropsType ) => {
             <div>
                 {
                     pages.map(p => {
-                        // @ts-ignore/////////////////////////////
-                        return <span className={props.currentPage === p && s.usersPage}
-                                     onClick={(e) => {
-                                         props.onPageChanged(p)
-                                     }
-                                     }
+                        return <span className={props.currentPage === p ? s.usersPage : ''}
+                                     onClick={(e) => {props.onPageChanged(p)}}
                         >{p}</span>
                     })
                 }

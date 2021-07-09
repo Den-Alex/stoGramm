@@ -5,6 +5,7 @@ export const UNFOLLOW = 'UNFOLLOW'
 export const SET_USERS = 'SET-USERS'
 export const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 export const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT'
+export const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
 type LocationType = {
     city: string
     country: string
@@ -22,24 +23,17 @@ export type InitialStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 let initialState: InitialStateType = {
-    users: [
-        // {id: 1, photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1TYrQcRfQft6dHNf34RsvzWQn4qG-zb0-XA&usqp=CAU',
-        //     follwed: true, fullName: "Den", status: "Vip", location: {city: "Vena", country: "Ausria"}},
-        // {id: 2, photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1TYrQcRfQft6dHNf34RsvzWQn4qG-zb0-XA&usqp=CAU',
-        //     follwed: true, fullName: "Marina", status: "Super", location: {city: "Minsk", country: "Belarus"}},
-        // {id: 3, photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1TYrQcRfQft6dHNf34RsvzWQn4qG-zb0-XA&usqp=CAU',
-        //     follwed: false, fullName: "Lena", status: "Norm", location: {city: "Mogilev", country: "Belarus"}},
-        // {id: 4, photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1TYrQcRfQft6dHNf34RsvzWQn4qG-zb0-XA&usqp=CAU',
-        //     follwed: false, fullName: "Vika", status: "Norm", location: {city: "Mogilev", country: "Belarus"}}
-    ],
+    users: [],
     pageSize: 5,
-    totalUsersCount: 0,
-    currentPage: 1
+    totalUsersCount: 20,
+    currentPage: 1,
+    isFetching: true
 }
 
-export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
 
 
     switch (action.type) {
@@ -81,44 +75,57 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
                 totalUsersCount: action.totalUsersCount
             }
         }
+        case TOGGLE_IS_FETCHING: {
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+        }
         default:
             return state;
     }
 }
-export type FollowType = ReturnType<typeof followAC>
-export type UnFollowType = ReturnType<typeof unfollowAC>
-export type setUsersType = ReturnType<typeof setUsersAC>
-export type setCurrentPagetype = ReturnType<typeof setCurrentPageAC>
-export type UsersTotalCount = ReturnType<typeof setUsersTotalCountAC>
+export type FollowType = ReturnType<typeof follow>
+export type UnFollowType = ReturnType<typeof unfollow>
+export type setUsersType = ReturnType<typeof setUsers>
+export type setCurrentPagetype = ReturnType<typeof setCurrentPage>
+export type UsersTotalCount = ReturnType<typeof setUsersTotalCount>
+export type toggleIsFetchingType = ReturnType<typeof setIsFetching>
 
-export let followAC = (userId: number) => {
+export let follow = (userId: number) => {
     return {
         type: FOLLOW,
         userId
     } as const
 }
-export let unfollowAC = (userId: number) => {
+export let unfollow = (userId: number) => {
     return {
         type: UNFOLLOW,
         userId
     } as const
 }
-export let setUsersAC = (users: Array<UserType>) => {
+export let setUsers = (users: Array<UserType>) => {
     return {
         type: SET_USERS,
         users
     } as const
 }
-export let setCurrentPageAC = (currentPage: number) => {
+export let setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE,
         currentPage
     } as const
 }
-export let setUsersTotalCountAC = (totalUsersCount: number) => {
+export let setUsersTotalCount = (totalUsersCount: number) => {
     return {
         type: SET_TOTAL_COUNT,
         totalUsersCount
+    } as const
+}
+export let setIsFetching = (isFetching: boolean) => {
+    return {
+        type: TOGGLE_IS_FETCHING,
+        isFetching
     } as const
 }
 

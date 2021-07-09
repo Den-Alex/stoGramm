@@ -1,14 +1,13 @@
-import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer";
-import {dialogsReducer, updateNewMessageBodytAC, sendMessageAC} from "./dialogs-reducer";
-import {sidebarReducer} from "./sidebar-reducer";
+import {addPostAC, updateNewPostTextAC} from "./profile-reducer";
+import {updateNewMessageBodytAC, sendMessageAC} from "./dialogs-reducer";
 import {
-    followAC,
+    follow,
     FollowType,
-    setCurrentPageAC, setCurrentPagetype,
-    setUsersAC,
-    setUsersTotalCountAC,
+    setCurrentPage, setCurrentPagetype,
+    setUsers,
+    setUsersTotalCount,
     setUsersType,
-    unfollowAC,
+    unfollow,
     UnFollowType,
     UsersTotalCount
 } from "./users-reducer";
