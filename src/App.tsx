@@ -7,6 +7,7 @@ import {Profile} from "./components/Profile/Profile";
 
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 // type AppType = {
 //     store: StoreType
@@ -17,16 +18,10 @@ export const App = () => {
         <div className="app-wrapper">
             <Header/>
             <Navbar/>
-            <Route path='/profile'
-                   render={() => <Profile
-                       // posts={props.store.getState().profilePage.posts}
-                       //                    newPostText={props.store.getState().profilePage.newPostText}
-                       //                    dispatch={props.store.dispatch.bind(props.store)}
-                   />}/>
+            <Route path='/profile/:userId'
+                   render={() => <ProfileContainer/>}/>
             <Route path='/dialogs'
-                   render={() => <DialogsContainer
-                       // store={props.store}
-                   />}/>
+                   render={() => <DialogsContainer/>}/>
             <Route path='/users'
                    render={() => <UsersContainer />}/>
         </div>
