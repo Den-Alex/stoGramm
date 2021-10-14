@@ -30,7 +30,7 @@ export type MapDispatchToPropsType = {
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (currentPage: number) => void
     setUsersTotalCount: (totalUsersCount: number) => void
-    setIsFetchin: (isFetching: boolean) => void
+    setIsFetching: (isFetching: boolean) => void
 }
 type UsersAPIContainerType = {
     users: Array<UserType>
@@ -59,7 +59,7 @@ export class UsersAPIContainer extends React.Component<UsersAPIContainerType> {
             });
     }
 
-    onPageChanged(pageNumber: number) {
+    onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
         this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
@@ -79,7 +79,7 @@ export class UsersAPIContainer extends React.Component<UsersAPIContainerType> {
                        totalUsersCount={this.props.totalUsersCount}
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}
-                       onPageChanged={this.onPageChanged}
+                       onPageChanged={this.onPageChanged}//.bind(this)
                 />
             </>
         )
@@ -96,7 +96,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, {
+export const UsersContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
     follow,
     unfollow,
     setUsers,

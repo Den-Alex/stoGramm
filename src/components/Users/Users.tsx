@@ -12,9 +12,6 @@ type UsersPropsType = {
     pageSize: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    // setCurrentPage: (currentPage: number) => void
-    // setUsersTotalCount: (totalUsersCount: number) => void
-    // setUsers: (users: Array<UserType>) => void
 }
 export const Users = (props: UsersPropsType) => {
 

@@ -26,7 +26,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 // <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType=> {
     return {
-        addPost: () => {////////Уточнить крейтеры - нужно ли менять местами
+        addPost: () => {
             dispatch(addPostAC())
         },
         updateNewPostText: (newText: string) => {
